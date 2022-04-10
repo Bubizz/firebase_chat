@@ -11,7 +11,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<SettingsPage> {
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,33 +19,34 @@ class _ChatsPageState extends State<SettingsPage> {
           color: Theme.of(context).primaryColor,
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-              child: 
-                  FractionallySizedBox(
-                    alignment: Alignment.topLeft,
-                    widthFactor: 1/2,
-                
-                    child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CustomIconButton(
-                              iconData: Icons.list,
-                              pressHandler: () {}),
-                          const Text(
-                            "Messages", style: TextStyle(color: Colors.white),
-                          ),
-                        
-                        ]),
-                  ),
-             
-            
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+              child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomIconButton(
+                        iconData: Icons.arrow_back_ios_new,
+                        pressHandler: () {
+                          Navigator.pop(context);
+                        }),
+                    const Spacer(),
+                    Transform.translate(
+                      offset: const Offset(-20, 70),
+                      child: const Text(
+                        "Settings",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                    const Spacer()
+                  ]),
             ),
           ),
         ),
         Positioned(
           child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(50)),
+            borderRadius:
+                const BorderRadius.vertical(top: Radius.elliptical(80, 60)),
             child: Column(
               children: [
                 Expanded(
@@ -56,7 +56,7 @@ class _ChatsPageState extends State<SettingsPage> {
               ],
             ),
           ),
-          top: 180,
+          top: 150,
           bottom: 0,
           left: 0,
           right: 0,

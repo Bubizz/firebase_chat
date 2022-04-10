@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
 import '../widgets/search_box.dart';
 import '../screens/settings.dart';
+import '../widgets/chat_list_item.dart';
 
 class ChatsPage extends StatefulWidget {
   const ChatsPage({Key? key}) : super(key: key);
@@ -61,15 +62,12 @@ class _ChatsPageState extends State<ChatsPage> {
         ),
         Positioned(
           child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(50)),
-            child: Column(
-              children: [
-                Expanded(
-                    child: Container(
-                  decoration: const BoxDecoration(color: Colors.grey),
-                ))
-              ],
-            ),
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(60)),
+            child: Container(color: Colors.white,
+            child: ListView.builder(
+              itemCount: 10,
+              itemBuilder: (_, index) => ChatListItem()),
+            )
           ),
           top: 180,
           bottom: 0,

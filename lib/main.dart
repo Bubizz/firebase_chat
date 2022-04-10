@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../screens/chats_page.dart';
-import './screens/settings.dart';
+import 'screens/chats_list_page.dart';
+import 'screens/settings.dart';
+import 'screens/chat.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: const Color.fromARGB(230, 10, 16, 95),
-        iconTheme: const IconThemeData(color: Colors.white, size: 22)    ,
+       
             
       ),
 
@@ -24,7 +25,10 @@ class MyApp extends StatelessWidget {
      routes: 
      {
        ChatsPage.routeName : (_) => const ChatsPage(),
-       SettingsPage.routeName : (_) => const SettingsPage()
+       SettingsPage.routeName : (_) => const SettingsPage(),
+       Chat.routeName : (_) => const Chat()
+
+
 
      ,}
 

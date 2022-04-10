@@ -11,6 +11,7 @@ class CustomIconButton extends StatelessWidget {
         width: 40,
         height: 40,
         child: IconButton(
+          iconSize: 22,
           onPressed: pressHandler, icon: Icon(iconData)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
