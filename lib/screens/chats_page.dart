@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
 import '../widgets/custom_icon_button.dart';
 import '../widgets/search_box.dart';
-
+import '../screens/settings.dart';
 
 class ChatsPage extends StatefulWidget {
   const ChatsPage({Key? key}) : super(key: key);
@@ -14,59 +13,70 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<ChatsPage> {
+  late final searchFocus = FocusNode();
 
-
-  void _searchBoxHandler()
-  {
-  
+  void _searchBoxHandler() {
+    searchFocus.requestFocus();
   }
 
-  void _navigateToSettings()
-  {
-
+  void _navigateToSettings() {
+      Navigator.of(context).pushNamed(SettingsPage.routeName);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Stack(
-            children: 
-            [
-              Container(
-                alignment: Alignment.topCenter,
-                color: Theme.of(context).primaryColor,
-                width: double.infinity,
-                height: MediaQuery.of(context).size.height * 0.35,
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+      body: Stack(fit: StackFit.expand, clipBehavior: Clip.none, children: [
+        Container(
+          color: Theme.of(context).primaryColor,
+          child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+              child: Column(
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomIconButton(iconData: Icons.list, pressHandler: _navigateToSettings),
-                            
-                              const Text("Messages",),
-                            
-                              CustomIconButton(iconData: Icons.search, pressHandler: _searchBoxHandler,)
-                            ]),
-                            const  Padding(padding: EdgeInsets.all(8.0), child: const SearchBox(),
-                          ),
-                          
-                      ],
+                        CustomIconButton(
+                            iconData: Icons.list,
+                            pressHandler: _navigateToSettings),
+                        const Text(
+                          "Messages",
+                        ),
+                        CustomIconButton(
+                          iconData: Icons.search,
+                          pressHandler: _searchBoxHandler,
+                        )
+                      ]),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: SearchBox(
+                      focus: searchFocus,
                     ),
                   ),
-                )),
-               
-
-            ]
+                ],
+              ),
+            ),
           ),
-           
-        ],
-      ),
+        ),
+        Positioned(
+          child: ClipRRect(
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(50)),
+            child: Column(
+              children: [
+                Expanded(
+                    child: Container(
+                  decoration: const BoxDecoration(color: Colors.grey),
+                ))
+              ],
+            ),
+          ),
+          top: 180,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        )
+      ]),
     );
   }
 }
