@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import '../widgets/custom_icon_button.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _ChatsPageState extends State<SettingsPage> {
                         }),
                     const Spacer(),
                     Transform.translate(
-                      offset: const Offset(-20, 70),
+                      offset: const Offset(-20, 50),
                       child: const Text(
                         "Settings",
                         style: TextStyle(color: Colors.white),
@@ -43,24 +44,47 @@ class _ChatsPageState extends State<SettingsPage> {
             ),
           ),
         ),
-        Positioned(
+        Positioned.fill(
           child: ClipRRect(
             borderRadius:
-                const BorderRadius.vertical(top: Radius.elliptical(80, 60)),
-            child: Column(
-              children: [
-                Expanded(
-                    child: Container(
-                  decoration: const BoxDecoration(color: Colors.grey),
-                ))
-              ],
+                const BorderRadius.vertical(top: Radius.elliptical(55, 40)),
+            child: Container(
+              color: Colors.white,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: ListView(
+                  children: [
+                      const ExpansionTile(title: Text("Theme", style: TextStyle(color: Colors.black), ), iconColor: Colors.red, tilePadding: EdgeInsets.all(0),),
+                      
+                      const ExpansionTile(title: Text("Theme", style: TextStyle(color: Colors.black), ), iconColor: Colors.red, tilePadding: EdgeInsets.all(0),),
+
+   
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Night mode", style: TextStyle(color: Colors.black),),
+                          CupertinoSwitch(value: false, onChanged: (newValue) {}),
+                     
+                        ],
+                      ),
+                     const SizedBox(height: 5,),
+                          Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Use system font", style: TextStyle(color: Colors.black),),
+                          CupertinoSwitch(value: false, onChanged: (newValue) {}),
+                     
+                        ],
+                      ),
+                       
+
+                  ],
+                ),
+              ),
             ),
           ),
-          top: 150,
-          bottom: 0,
-          left: 0,
-          right: 0,
-        )
+          top: 120,
+        ),
       ]),
     );
   }
