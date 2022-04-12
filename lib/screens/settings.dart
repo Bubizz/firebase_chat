@@ -12,6 +12,13 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<SettingsPage> {
+  bool nightMode = false;
+  bool systemFont = false;
+
+  var _fontSize = 16.0;
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,30 +61,82 @@ class _ChatsPageState extends State<SettingsPage> {
                 padding: const EdgeInsets.all(16.0),
                 child: ListView(
                   children: [
-                      const ExpansionTile(title: Text("Theme", style: TextStyle(color: Colors.black), ), iconColor: Colors.red, tilePadding: EdgeInsets.all(0),),
-                      
-                      const ExpansionTile(title: Text("Theme", style: TextStyle(color: Colors.black), ), iconColor: Colors.red, tilePadding: EdgeInsets.all(0),),
-
-   
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Night mode", style: TextStyle(color: Colors.black),),
-                          CupertinoSwitch(value: false, onChanged: (newValue) {}),
-                     
-                        ],
+                    ExpansionTile(
+                      title: Text(
+                        "Theme",
+                        style: TextStyle(color: Colors.black),
                       ),
-                     const SizedBox(height: 5,),
-                          Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text("Use system font", style: TextStyle(color: Colors.black),),
-                          CupertinoSwitch(value: false, onChanged: (newValue) {}),
-                     
-                        ],
-                      ),
-                       
+                      children: [
 
+                      ],
+                      iconColor: Colors.red,
+                      tilePadding: EdgeInsets.all(0),
+                    ),
+                    ExpansionTile(
+                      children: [
+                        ListTile(
+                          title: const Text('16'),
+                          leading: Radio<double>(
+                            value: 16.0,
+                            groupValue: _fontSize,
+                            onChanged: (double? value) {
+                              setState(() {
+                                _fontSize = value!;
+                              });
+                            },
+                          ),
+                        ),
+                        ListTile(
+                          title: const Text('18'),
+                          leading: Radio<double>(
+                            value: 18.0,
+                            groupValue: _fontSize,
+                            onChanged: (double? value) {
+                              setState(() {
+                                _fontSize = value!;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                      title: const Text(
+                        "Font Size",
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      iconColor: Colors.red,
+                      tilePadding: EdgeInsets.all(0),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Night mode",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        CupertinoSwitch(
+                            value: nightMode,
+                            onChanged: (newValue) => setState(() {
+                                  nightMode = newValue;
+                                })),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Use system font",
+                          style: TextStyle(color: Colors.black),
+                        ),
+                        CupertinoSwitch(
+                            value: systemFont,
+                            onChanged: (newValue) => setState(() {
+                                  systemFont = newValue;
+                                })),
+                      ],
+                    ),
                   ],
                 ),
               ),

@@ -6,6 +6,7 @@ class Contact extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(MaterialColor is ColorSwatch);
     return GestureDetector(
       onTap: () => Navigator.of(context).pushNamed(Chat.routeName),
       child: ListTile(
