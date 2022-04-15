@@ -6,7 +6,7 @@ import 'screens/settings.dart';
 import 'screens/chat.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider( create: (context) => Themes(Colors.green, ),child: const MyApp()));
+  runApp(ChangeNotifierProvider( create: (context) => Themes(Colors.green ),child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

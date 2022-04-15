@@ -1,8 +1,6 @@
 import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
-import 'package:provider/provider.dart';
-import 'package:chat_app/themes_provider.dart';
 import 'dart:math';
 
 class Chat extends StatefulWidget {
@@ -39,7 +37,7 @@ class _ChatsPageState extends State<Chat> {
           child: Padding(
             padding: EdgeInsets.all(
                 min(90, MediaQuery.of(context).size.height * 0.15) * 0.4),
-            child: TextField(),
+            child: const TextField(),
           ),
         ),
         Positioned.fill(

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../widgets/custom_icon_button.dart';
+import '../widgets/theme_button.dart';
 import 'package:provider/provider.dart';
 import 'package:chat_app/themes_provider.dart';
+
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -36,18 +38,12 @@ class _ChatsPageState extends State<SettingsPage> {
                   children: [
                     ExpansionTile(
                       children: [
-                        TextButton(
-                            onPressed: () {
-                              Provider.of<Themes>(context, listen: false)
-                                  .setTheme(Colors.green);
-                            },
-                            child: const Text('Green')),
-                          TextButton(
-                            onPressed: () {
-                              Provider.of<Themes>(context, listen: false)
-                                  .setTheme(Colors.yellow);
-                            },
-                            child: const Text('Yellow')),
+                       ThemeButton(color: Colors.green, text: "Green"),
+                        ThemeButton(color: Colors.orange, text: "Orange"),
+                        ThemeButton(color: Colors.blue, text: "Blue"),
+                        ThemeButton(color: Colors.grey, text: "Grey"),
+
+                          
                       ],
                       title: const Text(
                         "Theme",
@@ -77,21 +73,7 @@ class _ChatsPageState extends State<SettingsPage> {
                     const SizedBox(
                       height: 5,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          "Use system font",
-                    
-                        ),
-                        CupertinoSwitch(
-                            value: _systemFont,
-                            onChanged: (newValue) => setState(() {
-                                  _systemFont = newValue;
-                                })),
-                      ],
-                    ),
-                  ],
+                  ]
                 ),
               ),
             ),
