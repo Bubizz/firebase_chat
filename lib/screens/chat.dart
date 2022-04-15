@@ -1,6 +1,8 @@
 import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
+import 'package:provider/provider.dart';
+import 'package:chat_app/themes_provider.dart';
 import 'dart:math';
 
 class Chat extends StatefulWidget {
@@ -13,11 +15,13 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<Chat> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CupertinoNavigationBar(
-        middle: Text("petka bonk"),
+        backgroundColor: Theme.of(context).primaryColorLight,
+        middle: Text("Petka bonk", style: TextStyle(color: Theme.of(context).appBarTheme.foregroundColor),),
         leading: Padding(
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: CustomIconButton(
@@ -46,7 +50,7 @@ class _ChatsPageState extends State<Chat> {
                 children: [
                   Expanded(
                       child: Container(
-                    decoration: const BoxDecoration(color: Colors.white),
+                    decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
                   ))
                 ],
               ),

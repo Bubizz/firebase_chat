@@ -41,8 +41,8 @@ class _ChatsPageState extends State<ChatsPage> {
                         CustomIconButton(
                             iconData: Icons.list,
                             pressHandler: _navigateToSettings),
-                        const Text(
-                          "Messages",
+                        Text(
+                          "Messages", style: Theme.of(context).textTheme.titleLarge
                         ),
                         CustomIconButton(
                           iconData: Icons.search,
@@ -64,7 +64,7 @@ class _ChatsPageState extends State<ChatsPage> {
         Positioned(
           child: ClipRRect(
             borderRadius: const BorderRadius.vertical(top: Radius.circular(60)),
-            child: Container(color: Colors.white,
+            child: Container(color: Theme.of(context).backgroundColor,
             child: ListView.builder(
 
               itemCount: 10,

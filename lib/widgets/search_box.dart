@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -29,6 +30,7 @@ class _SearchBoxState extends State<SearchBox> {
   @override
   Widget build(BuildContext context) {
     return CupertinoSearchTextField(
+      style: TextStyle(color: Theme.of(context).primaryTextTheme.bodyMedium!.color,),
         focusNode: widget.focus,
         backgroundColor: CupertinoColors.systemGrey6,
         onSubmitted: (_) {widget.focus.unfocus();},

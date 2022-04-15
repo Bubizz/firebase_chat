@@ -15,7 +15,7 @@ class CustomIconButton extends StatelessWidget {
           onPressed: pressHandler, icon: Icon(iconData)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: const Color.fromARGB(255, 59, 33, 153),
+          color: Theme.of(context).buttonColor
         ));
   }
 }
