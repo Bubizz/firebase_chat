@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "542010957997",
+    "project_id": "chat-c27ef",
+    "storage_bucket": "chat-c27ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:542010957997:android:d1497f4e88e3d11e61e624",
+        "android_client_info": {
+          "package_name": "com.example.hangoutchat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "542010957997-qfsip1cr5h14dban56qmfd7e63hcv70n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hangoutchat",
+            "certificate_hash": "42516ed73772df34cff17dab0950e7c78c3610f5"
+          }
+        },
+        {
+          "client_id": "542010957997-uj3qce9s55vdkb0d9ednr7h2vphuovp7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHAcMWgfBdjJl8ybiXTEXgixZX0dH8J-c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "542010957997-uj3qce9s55vdkb0d9ednr7h2vphuovp7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

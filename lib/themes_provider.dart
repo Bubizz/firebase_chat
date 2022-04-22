@@ -25,10 +25,11 @@ class Themes extends ChangeNotifier {
     colorPalette = color;
     customTheme = customTheme.copyWith(
         primaryColor: colorPalette[500], buttonColor: colorPalette[100]);
+    notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('preferedColor', color.value);
 
-    notifyListeners();
+ 
   }
 
   void setDarkMode() async {
