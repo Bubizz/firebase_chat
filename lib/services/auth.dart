@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart';
+
 class Auth
 {
 final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -27,6 +31,25 @@ Future signOut() async
   await _auth.signOut();
   await _googleSignIn.signOut();
 }
+
+User? get getCurrentUser{
+    return _auth.currentUser;
+}
+
+Future addUserInBox() async
+{
+    var response = await put(Uri.parse("https://chat-c27ef-default-rtdb.firebaseio.com/user-inbox.json"),
+    body: jsonEncode({"userid" :  _auth.currentUser?.uid} ));
+   
+
+
+}
+
+Stream<User?> get getUser
+{
+  return _auth.authStateChanges();
+}
+
 
 
 

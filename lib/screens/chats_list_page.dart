@@ -1,4 +1,6 @@
+import 'package:chat_app/services/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../widgets/custom_icon_button.dart';
 import '../widgets/search_box.dart';
 import '../screens/settings.dart';
@@ -21,7 +23,7 @@ class _ChatsPageState extends State<ChatsPage> {
   }
 
   void _navigateToSettings() {
-      Navigator.of(context).pushNamed(SettingsPage.routeName);
+    Navigator.of(context).pushNamed(SettingsPage.routeName);
   }
 
   @override
@@ -32,18 +34,21 @@ class _ChatsPageState extends State<ChatsPage> {
           color: Theme.of(context).primaryColor,
           child: SafeArea(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
               child: Column(
                 children: [
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomIconButton(
-                            iconData: Icons.list,
-                            pressHandler: _navigateToSettings),
-                        Text(
-                          "Messages", style: Theme.of(context).textTheme.titleLarge
+                        GestureDetector(
+                          onTap: _navigateToSettings,
+                          child: CircleAvatar(
+                              child: Image.network(Auth().getCurrentUser!.photoURL!),
+                          ),  
                         ),
+                        Text("Messages",
+                            style: Theme.of(context).textTheme.titleLarge),
                         CustomIconButton(
                           iconData: Icons.search,
                           pressHandler: _searchBoxHandler,
@@ -60,22 +65,24 @@ class _ChatsPageState extends State<ChatsPage> {
             ),
           ),
         ),
- 
         Positioned(
           child: ClipRRect(
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(60)),
-            child: Container(color: Theme.of(context).backgroundColor,
-            child: ListView.builder(
-
-              itemCount: 10,
-              itemBuilder: (_, index) => Column(
-                children: const [
-                  Contact(),
-                  SizedBox(height: 10,)
-                ],
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(60)),
+              child: Container(
+                color: Theme.of(context).backgroundColor,
+                child: ListView.builder(
+                    itemCount: 10,
+                    itemBuilder: (_, index) => Column(
+                          children: const [
+                            Contact(),
+                            SizedBox(
+                              height: 10,
+                              
+                            )
+                          ],
+                        )),
               )),
-            )
-          ),
           top: 180,
           bottom: 0,
           left: 0,

@@ -16,7 +16,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<SettingsPage> {
-  bool _systemFont = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -62,19 +62,17 @@ class _ChatsPageState extends State<SettingsPage> {
                                 Provider.of<Themes>(context, listen: false)
                                     .setDarkMode();
                               })),
-                    
-                    
                     ],
                   ),
-                    SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1
-                      ),
-                    ElevatedButton.icon(
-                          onPressed: () {
-                            Auth().signOut();
-                          },
-                          icon: const Icon(Icons.logout_sharp),
-                          label: const Text("Sign out"))
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        Auth().signOut().then((value) => Navigator.of(context)
+                            .pushNamedAndRemoveUntil(
+                                "login", (route) => false));
+                      },
+                      icon: const Icon(Icons.logout_sharp),
+                      label: const Text("Sign out"))
                 ]),
               ),
             ),

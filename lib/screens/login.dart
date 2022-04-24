@@ -17,14 +17,25 @@ void _signIn() async
 {
    await Auth().signInWithGoogle();
    Navigator.push(context, MaterialPageRoute(builder: (_) => ChatsPage()));
+   Auth().addUserInBox();
 }
 
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(onPressed: () {
-     _signIn();
-    }, icon: const Icon(Icons.ac_unit_rounded), label: const Text("log in with Google"));
+
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      body: Center(
+        child: SizedBox(
+          width: 150,
+          height: 30,
+          child: ElevatedButton.icon(onPressed: () {
+           _signIn();
+          }, icon: const Icon(Icons.ac_unit_rounded), label: const Text("log in with Google")),
+        ),
+      ),
+    );
 
   }
 }
