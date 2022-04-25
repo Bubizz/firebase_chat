@@ -1,8 +1,9 @@
 import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:http/http.dart';
+import '../services/auth.dart';
 
 class Auth
 {
@@ -22,9 +23,13 @@ Future<UserCredential> signInWithGoogle() async {
     accessToken: googleAuth?.accessToken,
     idToken: googleAuth?.idToken,
   );
-
   // Once signed in, return the UserCredential
-  return await _auth.signInWithCredential(credential);
+  final result = await _auth.signInWithCredential(credential);
+  if(result.additionalUserInfo!.isNewUser)
+  {
+    _addUserInBox();
+  }
+  return result;
 }
 Future signOut() async 
 {
@@ -36,19 +41,23 @@ User? get getCurrentUser{
     return _auth.currentUser;
 }
 
-Future addUserInBox() async
+Future _addUserInBox() async // creates inbox for new user
 {
-    var response = await put(Uri.parse("https://chat-c27ef-default-rtdb.firebaseio.com/user-inbox.json"),
-    body: jsonEncode({"userid" :  _auth.currentUser?.uid} ));
-   
-
-
+     // await put(Uri.parse("https://chat-c27ef-default-rtdb.firebaseio.com/user-inbox.json"),
+     // body: jsonEncode({_auth.currentUser?.displayName.toString() : {"userid" : _auth.currentUser?.uid,  "photoURL" : _auth.currentUser?.photoURL} }));
+      var ref = FirebaseDatabase.instance.ref().child("user-inbox").update({Auth()._auth.currentUser!.displayName! : {"userid" : _auth.currentUser?.uid,  "photoURL" : _auth.currentUser?.photoURL} });
 }
 
 Stream<User?> get getUser
 {
+
   return _auth.authStateChanges();
+  
 }
+
+
+
+
 
 
 

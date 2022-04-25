@@ -1,10 +1,11 @@
 import 'package:chat_app/services/auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../widgets/custom_icon_button.dart';
 import '../widgets/search_box.dart';
 import '../screens/settings.dart';
+import 'package:provider/provider.dart';
 import '../widgets/contact.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ChatsPage extends StatefulWidget {
   const ChatsPage({Key? key}) : super(key: key);
@@ -28,6 +29,7 @@ class _ChatsPageState extends State<ChatsPage> {
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       body: Stack(fit: StackFit.expand, clipBehavior: Clip.none, children: [
         Container(
