@@ -4,7 +4,10 @@ import '../widgets/custom_icon_button.dart';
 import 'dart:math';
 
 class Chat extends StatefulWidget {
-  const Chat({Key? key}) : super(key: key);
+  const Chat(this.username,this.imageURL);
+
+  final String username;
+  final String imageURL;
 
   static const routeName = "chat";
 
@@ -19,7 +22,7 @@ class _ChatsPageState extends State<Chat> {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         backgroundColor: Theme.of(context).primaryColorLight,
-        middle: Text("Petka bonk", style: TextStyle(color: Theme.of(context).appBarTheme.foregroundColor),),
+        middle: Text(widget.username, style: TextStyle(color: Theme.of(context).appBarTheme.foregroundColor),),
         leading: Padding(
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: CustomIconButton(
