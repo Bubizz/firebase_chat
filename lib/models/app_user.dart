@@ -1,5 +1,4 @@
 
-import 'package:flutter/material.dart';
 
 class AppUser
 {
@@ -11,9 +10,9 @@ class AppUser
 
   factory AppUser.fromJson(Map<String, dynamic> map)
   {
-   var a = AppUser(map["username"], map["photoURL"], map["inbox"] );
-   print(a.toString() +"vvfvfvf");
-    return a;
+   return AppUser(map["username"], map["photoURL"],  map["inbox"] == null ? null : Map<String,dynamic>.from(map["inbox"] as Map<dynamic, dynamic>) );
+ 
+    
   }
 
 

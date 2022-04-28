@@ -4,25 +4,17 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:chat_app/screens/login.dart';
 import 'package:chat_app/screens/chats_list_page.dart';
 
-
-class Wrapper extends StatelessWidget {
-  const Wrapper({ Key? key }) : super(key: key);
+class Wrapper extends StatefulWidget {
+  const Wrapper({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-   return  Consumer<User?>(
-      builder: (context, value, child)
-    {
-      if(value==null)
-      {
-       return  const Login();
+  State<Wrapper> createState() => _WrapperState();
+}
 
-      }
-      else
-      {
-        return const ChatsPage();
-      }
-      }
-   );
+class _WrapperState extends State<Wrapper> {
+  @override
+  Widget build(BuildContext context) {
+    var user = Provider.of<User?>(context);
+    return user == null ? const Login() : const ChatsPage();
   }
 }

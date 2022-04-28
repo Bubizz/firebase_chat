@@ -11,7 +11,6 @@ class Themes extends ChangeNotifier {
         customTheme = ThemeData(
           primaryColor: colorPalette[600],
           backgroundColor: Colors.white,
-          buttonColor: colorPalette[100],
         ) {
     _loadPrefs();
   }
@@ -24,7 +23,7 @@ class Themes extends ChangeNotifier {
   void setTheme(MaterialColor color) async {
     colorPalette = color;
     customTheme = customTheme.copyWith(
-        primaryColor: colorPalette[500], buttonColor: colorPalette[100]);
+        primaryColor: colorPalette[500]);
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('preferedColor', color.value);
@@ -36,10 +35,18 @@ class Themes extends ChangeNotifier {
     //sets dark or light mode based on bool and saves preference locally
     customTheme = isDark
         ? ThemeData.dark().copyWith(
-            primaryColor: colorPalette[500], buttonColor: colorPalette[100])
-        : ThemeData.light().copyWith(
             primaryColor: colorPalette[500],
-            buttonColor: colorPalette[100],
+            backgroundColor: Colors.grey[650],
+            primaryColorLight: colorPalette[300],
+            buttonColor: colorPalette[200])
+
+            
+            
+        : ThemeData.light().copyWith(
+            textTheme: const TextTheme().copyWith(bodyMedium: const TextStyle(color: Colors.black)),
+            primaryColor: colorPalette[500],
+            buttonColor: colorPalette[200],
+            primaryColorLight: colorPalette[200],
             backgroundColor: Colors.white);
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();

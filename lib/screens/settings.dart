@@ -16,8 +16,6 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<SettingsPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,8 +38,8 @@ class _ChatsPageState extends State<SettingsPage> {
                       ThemeButton(color: Colors.blue, text: "Blue"),
                       ThemeButton(color: Colors.grey, text: "Grey"),
                     ],
-                    title: const Text(
-                      "Theme",
+                    title: Text(
+                      "Theme", style: TextStyle(color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.white,) 
                     ),
                     iconColor: Colors.red,
                     tilePadding: const EdgeInsets.all(0),
@@ -66,10 +64,11 @@ class _ChatsPageState extends State<SettingsPage> {
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                   ElevatedButton.icon(
-                      onPressed: () {
-                        Auth().signOut().then((value) => Navigator.of(context)
-                            .pushNamedAndRemoveUntil(
-                                "login", (route) => false));
+                      onPressed: () async {
+                        await Auth().signOut();
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
                       },
                       icon: const Icon(Icons.logout_sharp),
                       label: const Text("Sign out"))
@@ -99,7 +98,7 @@ class _ChatsPageState extends State<SettingsPage> {
                     }),
                 const Spacer(),
                 Transform.translate(
-                  offset: const Offset(-20, 50),
+                  offset: const Offset(-20, 10),
                   child: Text(
                     "Settings",
                     style: Theme.of(context).textTheme.titleLarge,

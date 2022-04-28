@@ -16,7 +16,7 @@ void main() async {
 
   await Firebase.initializeApp();
 
-  runApp(MultiProvider(child: MyApp(), providers: [
+  runApp(MultiProvider(child: const MyApp(), providers: [
     ChangeNotifierProvider<Themes>.value(value: Themes(Colors.green)),
     StreamProvider<User?>.value(
       initialData: null,
@@ -26,7 +26,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -50,6 +50,7 @@ class MyApp extends StatelessWidget {
               );
             });
           }
+          return null;
         });
   }
 }

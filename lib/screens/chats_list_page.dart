@@ -1,11 +1,12 @@
+import 'package:chat_app/models/app_user.dart';
 import 'package:chat_app/services/auth.dart';
+import 'package:chat_app/services/user_searching.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
 import '../widgets/search_box.dart';
 import '../screens/settings.dart';
-import 'package:provider/provider.dart';
 import '../widgets/contact.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 
 class ChatsPage extends StatefulWidget {
   const ChatsPage({Key? key}) : super(key: key);
@@ -19,12 +20,26 @@ class ChatsPage extends StatefulWidget {
 class _ChatsPageState extends State<ChatsPage> {
   late final searchFocus = FocusNode();
 
+  var displayedContacts = <AppUser>[];
+
+
   void _searchBoxHandler() {
     searchFocus.requestFocus();
   }
 
   void _navigateToSettings() {
     Navigator.of(context).pushNamed(SettingsPage.routeName);
+  }
+
+  Future<List<AppUser>?> _searchUsers(String name) async
+  {
+    displayedContacts = await UserSearching().searchUser(name);
+
+    setState(() {
+      
+    });
+    return null;
+    
   }
 
   @override
@@ -60,6 +75,7 @@ class _ChatsPageState extends State<ChatsPage> {
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: SearchBox(
                       focus: searchFocus,
+                      searchHandler: _searchUsers
                     ),
                   ),
                 ],
@@ -74,11 +90,11 @@ class _ChatsPageState extends State<ChatsPage> {
               child: Container(
                 color: Theme.of(context).backgroundColor,
                 child: ListView.builder(
-                    itemCount: 10,
+                    itemCount: displayedContacts.length,
                     itemBuilder: (_, index) => Column(
-                          children: const [
-                            Contact(),
-                            SizedBox(
+                          children: [
+                            Contact(photoURL: displayedContacts[index].ImgURL, username: displayedContacts[index].name , ),
+                            const SizedBox(
                               height: 10,
                               
                             )
