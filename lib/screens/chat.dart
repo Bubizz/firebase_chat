@@ -1,13 +1,14 @@
+import "package:flutter/cupertino.dart";
+import 'package:flutter/material.dart';
 import 'package:chat_app/models/Message.dart';
 import 'package:chat_app/services/sending_message.dart';
 import '../services/auth.dart';
-import "package:flutter/cupertino.dart";
-import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
+
 import 'dart:math';
 
 class Chat extends StatefulWidget {
-  const Chat(this.username,this.imageURL);
+  const Chat(this.username, this.imageURL);
 
   final String username;
   final String imageURL;
@@ -19,15 +20,56 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatsPageState extends State<Chat> {
-
   TextEditingController controller = TextEditingController();
+
+  void _showErrorDialog() {
+    final alert = CupertinoAlertDialog(
+        title: const Text("Sending message failed"),
+        content: const Text("Check your Internet connection and try again"),
+        actions: [
+          TextButton(
+            child: const Text("OK"),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ]);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  void _submitMessage() async {
+    var text = controller.text;
+    try {
+      await ChatLogicHandler()
+          .sendMessage(Message(
+              sender: Auth().getCurrentUser!.displayName.toString(),
+              receiver: widget.username,
+              content: text))
+          .timeout(const Duration(seconds: 2));
+    } catch (e) {
+      print("ww");
+      _showErrorDialog();
+    } finally {
+      controller.clear();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CupertinoNavigationBar(
         backgroundColor: Theme.of(context).primaryColorLight,
-        middle: Text(widget.username, style: TextStyle(color: Theme.of(context).appBarTheme.foregroundColor),),
+        middle: Text(
+          widget.username,
+          style:
+              TextStyle(color: Theme.of(context).appBarTheme.foregroundColor),
+        ),
         leading: Padding(
           padding: const EdgeInsets.symmetric(vertical: 2.0),
           child: CustomIconButton(
@@ -45,7 +87,19 @@ class _ChatsPageState extends State<Chat> {
           child: Padding(
             padding: EdgeInsets.all(
                 min(90, MediaQuery.of(context).size.height * 0.15) * 0.4),
-            child: CupertinoTextField(controller: controller, onSubmitted: (_) => ChatLogicHandler().sendMessage(Message(sender: Auth().getCurrentUser!.displayName.toString() , receiver: widget.username, content: controller.text))),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CupertinoTextField(
+                      style: TextStyle(
+                          color: Theme.of(context).textTheme.bodyMedium!.color),
+                      controller: controller,
+                      onSubmitted: (_) => _submitMessage()),
+                ),
+                IconButton(
+                    onPressed: _submitMessage, icon: const Icon(Icons.send))
+              ],
+            ),
           ),
         ),
         Positioned.fill(
@@ -56,7 +110,8 @@ class _ChatsPageState extends State<Chat> {
                 children: [
                   Expanded(
                       child: Container(
-                    decoration: BoxDecoration(color: Theme.of(context).backgroundColor),
+                    decoration:
+                        BoxDecoration(color: Theme.of(context).backgroundColor),
                   ))
                 ],
               ),

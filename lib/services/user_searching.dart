@@ -10,12 +10,19 @@ class UserSearching
 
   Future<List<AppUser>> searchUser(String name) async
   {
+      late DataSnapshot documentSnapshot;
       var query = ref.child("users").orderByChild("username").startAt(name).endAt("$name\uf8ff"); //creates query 
-
-      var documentSnapshot =  await query.get(); 
+      try
+      {
+      documentSnapshot =  await query.get().timeout(const Duration(seconds: 8),onTimeout: (() => throw Exception("It takes too long")));
+      }
+      catch(e)
+      {
+        rethrow;
+      }
 
       if (documentSnapshot.exists) {
-        
+     
 
         Map<String,dynamic> map = Map<String,dynamic>.from(documentSnapshot.value as Map<dynamic, dynamic>);//converts response to Map with String keys
 

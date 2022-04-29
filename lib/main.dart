@@ -10,14 +10,17 @@ import 'screens/chat.dart';
 import 'package:firebase_core/firebase_core.dart';
 import './services/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await Firebase.initializeApp();
+  FirebaseDatabase.instance.setPersistenceEnabled(false);
 
   runApp(MultiProvider(child: const MyApp(), providers: [
     ChangeNotifierProvider<Themes>.value(value: Themes(Colors.green)),
+   
     StreamProvider<User?>.value(
       initialData: null,
       value: Auth().getUser,

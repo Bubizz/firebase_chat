@@ -1,5 +1,6 @@
 import 'package:chat_app/models/app_user.dart';
 import 'package:chat_app/services/auth.dart';
+import "package:flutter/cupertino.dart";
 import 'package:chat_app/services/user_searching.dart';
 import 'package:flutter/material.dart';
 import '../widgets/custom_icon_button.dart';
@@ -22,6 +23,25 @@ class _ChatsPageState extends State<ChatsPage> {
 
   var displayedContacts = <AppUser>[];
 
+  void _showErrorDialog()
+  {
+    final alert = CupertinoAlertDialog(
+    title: const Text("Searching users failed"),
+    content: const Text("Check your Internet connection and try again"),
+    actions: [
+      TextButton(
+    child: const Text("OK"),
+    onPressed:  () {Navigator.of(context).pop();},)]
+    );
+
+    showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+  }
+
 
   void _searchBoxHandler() {
     searchFocus.requestFocus();
@@ -31,9 +51,17 @@ class _ChatsPageState extends State<ChatsPage> {
     Navigator.of(context).pushNamed(SettingsPage.routeName);
   }
 
-  Future<List<AppUser>?> _searchUsers(String name) async
+  void _searchUsers(String name) async
   {
+    try
+    {
     displayedContacts = await UserSearching().searchUser(name);
+    }
+    catch(e)
+    {
+      _showErrorDialog();
+    }
+   
 
     setState(() {
       
@@ -41,6 +69,7 @@ class _ChatsPageState extends State<ChatsPage> {
     return null;
     
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -36,17 +36,17 @@ class Themes extends ChangeNotifier {
     customTheme = isDark
         ? ThemeData.dark().copyWith(
             primaryColor: colorPalette[500],
-            backgroundColor: Colors.grey[650],
+            backgroundColor: Colors.grey[850],
             primaryColorLight: colorPalette[300],
-            buttonColor: colorPalette[200])
+            buttonColor: colorPalette[150])
 
             
             
         : ThemeData.light().copyWith(
             textTheme: const TextTheme().copyWith(bodyMedium: const TextStyle(color: Colors.black)),
             primaryColor: colorPalette[500],
-            buttonColor: colorPalette[200],
-            primaryColorLight: colorPalette[200],
+            buttonColor: colorPalette[150],
+            primaryColorLight: colorPalette[300],
             backgroundColor: Colors.white);
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
