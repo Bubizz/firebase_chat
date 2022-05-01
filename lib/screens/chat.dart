@@ -24,7 +24,7 @@ class Chat extends StatefulWidget {
 class _ChatsPageState extends State<Chat> {
   TextEditingController controller = TextEditingController();
 
-  var messages = <Message>[];
+
   var isSendingButtonEnabled = true;
 
   void _showErrorDialog() {
@@ -48,7 +48,7 @@ class _ChatsPageState extends State<Chat> {
     );
   }
 
-  void _submitMessage() async {
+  void _submitMessage(Function(Message m) reflectMessageOnTheScreen) async {
     var text = controller.text;
     if(text == "")
     {
@@ -64,10 +64,9 @@ class _ChatsPageState extends State<Chat> {
               receiver: widget.username,
               content: text);
       await ChatLogicHandler().sendMessage(m).timeout(const Duration(seconds: 2));
+      reflectMessageOnTheScreen(m);
          
-      setState(() {
-        messages.insert(0, m);
-      });
+    
     } catch (e) {
       _showErrorDialog();
     } 
@@ -97,68 +96,84 @@ class _ChatsPageState extends State<Chat> {
           ),
         ),
       ),
-      body: StreamProvider<Message?>.value(
-      initialData: null,
-      value: ChatLogicHandler().getStreamReadingMessages(widget.username),
-       child:
-        
-         Consumer<Message?>(
-          builder: (context, value, child) {
-           messages.insert(0,value!);
-           return
-           Stack(fit: StackFit.expand, clipBehavior: Clip.none, children: [
-            Container(
-              alignment: Alignment.bottomCenter,
-              color: Theme.of(context).primaryColor,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: min(22, MediaQuery.of(context).size.height* 0.04,), left: MediaQuery.of(context).size.width * 0.1, right: MediaQuery.of(context).size.width * 0.1),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: CupertinoTextField(
-                        placeholder: "Type something",
-                          style: TextStyle(
-                              color: Theme.of(context).textTheme.bodyMedium!.color),
-                          controller: controller,),
-                          
-                    ),
-                    IconButton(
-                        onPressed: isSendingButtonEnabled ? _submitMessage : null, icon: const Icon(Icons.send))
-                  ],
-                ),
-              ),
-            ),
-            Positioned.fill(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.vertical(
-                      bottom: Radius.elliptical(80, 60)),
-                  child: Container(
-                    color: Theme.of(context).backgroundColor,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: ListView.builder(
-                        reverse: true,
-                        itemBuilder: (_, index) {
-                        
-                        return Column(
-                          children: [
-                            Align(child: MessageCard(message: messages[index].content), alignment: Alignment.centerRight,),
-                          
-                            const SizedBox(height: 20,)
-                          ],
-                        );
-                      },
-                      itemCount: messages.length,),
-                    ),
-                  )
-                  
-                ),
-                bottom: min(80, MediaQuery.of(context).size.height * 0.15))
-                 ]);
-          }),
+      body: 
+      ChangeNotifierProvider<ChatProvider>(
+        create: (context) => ChatProvider(widget.username),
+        child: Consumer<ChatProvider>(
+         builder: (context, value, child) {
+          return
+          Stack(fit: StackFit.expand, clipBehavior: Clip.none, children: [
+           Container(
+             alignment: Alignment.bottomCenter,
+             color: Theme.of(context).primaryColor,
+             child: Padding(
+               padding: EdgeInsets.only(bottom: min(22, MediaQuery.of(context).size.height* 0.04,), left: MediaQuery.of(context).size.width * 0.1, right: MediaQuery.of(context).size.width * 0.1),
+               child: Row(
+                 children: [
+                   Expanded(
+                     child: CupertinoTextField(
+                       placeholder: "Type something",
+                         style: TextStyle(
+                             color: Theme.of(context).textTheme.bodyMedium!.color),
+                         controller: controller,),
+                         
+                   ),
+                   IconButton(
+                       onPressed: isSendingButtonEnabled ? () => _submitMessage(value.addMessage) : null, icon: const Icon(Icons.send))
+                 ],
+               ),
+             ),
+           ),
+           Positioned.fill(
+               child: ClipRRect(
+                 borderRadius: const BorderRadius.vertical(
+                     bottom: Radius.elliptical(80, 60)),
+                 child: Container(
+                   color: Theme.of(context).backgroundColor,
+                   child: Padding(
+                     padding: const EdgeInsets.only(bottom: 20.0),
+                     child: ListView.builder(
+                       reverse: true,
+                       itemBuilder: (_, index) {
+                       
+                       return Column(
+                         children: [
+                           Align(child: MessageCard(message: value.messages[index].content), alignment: Alignment.centerRight,),
+                         
+                           const SizedBox(height: 20,)
+                         ],
+                       );
+                     },
+                     itemCount: value.messages.length,),
+                   ),
+                 )
+                 
+               ),
+               bottom: min(80, MediaQuery.of(context).size.height * 0.15))
+                ]);
+         }),
       ),
     );
   }
+}
+
+class ChatProvider extends ChangeNotifier
+{
+  var messages = <Message>[];
+
+  ChatProvider(String usernameInbox)
+  {
+    ChatLogicHandler().getStreamReadingMessages(usernameInbox).listen((event) {if(event!=null){addMessage(event);} });
+  }
+
+  void addMessage(Message message)
+  {
+    messages.insert(0, message);
+    notifyListeners();
+  }
+
+
+
 }
 
 
