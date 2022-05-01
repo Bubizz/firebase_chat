@@ -21,8 +21,8 @@ class ChatLogicHandler
     if(event.snapshot.exists)
     {
       var response = event.snapshot.value as Map<dynamic, dynamic>;
-      var a = response.keys.toList()[0];
-      return Message.fromJSON(Map<String,dynamic>.from(response[a] as Map<dynamic, dynamic>), Auth().getCurrentUser!.displayName.toString(), fromUser);
+      var messageid = response.keys.toList()[0];
+      return Message.fromJSON(Map<String,dynamic>.from(response[messageid] as Map<dynamic, dynamic>), Auth().getCurrentUser!.displayName.toString(), fromUser);
     }
     else
     {
@@ -33,5 +33,21 @@ class ChatLogicHandler
   
 }
 
+ Future<List<Message>> loadMessages(String fromUser) async
+ {
+   var list = <Message>[];
+   var data = await FirebaseDatabase.instance.ref().child('users/${Auth().getCurrentUser!.displayName.toString()}/inbox/sender_' + fromUser).get();
+   var map = data.value as Map<dynamic, dynamic>;
+   var names = map.keys.toList();
+   for(var KeyName in names) // extracts data for every user
+        {
+        
+          list.add(Message.fromJSON(Map<String,dynamic>.from(map[KeyName] as Map<dynamic, dynamic>), "bebe", fromUser));
+
+        }
+  return list;
+ }
+
+//{1651437317013: {content: elo2, timestamp: 2022-05-01 22:35:17.012341}, 1651437314386: {content: elo, timestamp: 2022-05-01 22:35:14.376651}, 1651437385486: {content: www, timestamp: 2022-05-01 22:36:25.485957}}
 
 }

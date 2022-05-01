@@ -1,5 +1,4 @@
 import 'package:chat_app/widgets/message.dart';
-import 'package:firebase_database/firebase_database.dart';
 import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
 import 'package:chat_app/models/Message.dart';
@@ -138,8 +137,7 @@ class _ChatsPageState extends State<Chat> {
                        
                        return Column(
                          children: [
-                           Align(child: MessageCard(message: value.messages[index].content), alignment: Alignment.centerRight,),
-                         
+                           MessageCard(message: value.messages[index].content, sentByApppUser: value.messages[index].sender == Auth().getCurrentUser!.displayName.toString(),),
                            const SizedBox(height: 20,)
                          ],
                        );
@@ -163,7 +161,11 @@ class ChatProvider extends ChangeNotifier
 
   ChatProvider(String usernameInbox)
   {
-    ChatLogicHandler().getStreamReadingMessages(usernameInbox).listen((event) {if(event!=null){addMessage(event);} });
+    ChatLogicHandler().getStreamReadingMessages(usernameInbox).skip(1).listen((event) {if(event!=null){addMessage(event);} });
+    ChatLogicHandler().loadMessages(usernameInbox).then((value)  { messages = value; notifyListeners(); });
+
+
+    
   }
 
   void addMessage(Message message)

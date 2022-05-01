@@ -11,10 +11,7 @@ class Message
   factory
   Message.fromJSON(Map<String,dynamic> message, String receiver, String sender)
  {
-   print("uwuwuuu");
-   print(message);
-   print(sender);
-   print(receiver);
+  
   return Message(content: message["content"], timeStamp: message["timestamp"], sender: sender, receiver: receiver );
  }
 

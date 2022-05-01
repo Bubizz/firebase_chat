@@ -1,29 +1,35 @@
+import 'package:chat_app/themes_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MessageCard extends StatelessWidget {
-  MessageCard({ Key? key, required this.message }) : super(key: key);
+  MessageCard({ Key? key, required this.message, required this.sentByApppUser }) : super(key: key);
 
   String message;
+  bool sentByApppUser;
 
   @override
   Widget build(BuildContext context) {
     
-      return FractionallySizedBox(
-        widthFactor: 4/10,
-        child: ClipPath(
-          clipper: CustomClip(),
-
-          child: Container(
-            color: Colors.yellow,
-            
-           child: Padding(
-             padding: const EdgeInsets.all(18.0),
-             child: Text(message, style: TextStyle(color: Colors.red),),
-           )
-          ),
-        ),
+      return Align(
+        alignment: sentByApppUser ?  Alignment.centerRight : Alignment.centerLeft,
+        child: FractionallySizedBox(
+          widthFactor: 6/10,
+          child: ClipPath(
+            clipper: CustomClip(),
       
-    );
+            child: Container(
+              color: Provider.of<Themes>(context).colorPalette[300] ,
+              
+             child: Padding(
+               padding: const EdgeInsets.all(18.0),
+               child: Text(message, style: Theme.of(context).textTheme.bodyText1),
+             )
+            ),
+          ),
+        
+          ),
+      );
   }
 }
 

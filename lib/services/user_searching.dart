@@ -1,3 +1,5 @@
+
+
 import 'package:chat_app/models/app_user.dart';
 import 'package:firebase_database/firebase_database.dart';
 
@@ -23,7 +25,7 @@ class UserSearching
 
       if (documentSnapshot.exists) {
      
-
+     
         Map<String,dynamic> map = Map<String,dynamic>.from(documentSnapshot.value as Map<dynamic, dynamic>);//converts response to Map with String keys
 
         var names = map.keys.toList();
