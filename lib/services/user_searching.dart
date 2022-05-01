@@ -14,7 +14,7 @@ class UserSearching
       var query = ref.child("users").orderByChild("username").startAt(name).endAt("$name\uf8ff"); //creates query 
       try
       {
-      documentSnapshot =  await query.get().timeout(const Duration(seconds: 8),onTimeout: (() => throw Exception("It takes too long")));
+      documentSnapshot =  await query.get().timeout(const Duration(seconds: 5),onTimeout: (() => throw Exception("It takes too long")));
       }
       catch(e)
       {

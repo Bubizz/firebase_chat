@@ -11,17 +11,21 @@ class ChatLogicHandler
    DatabaseReference ref = FirebaseDatabase.instance.ref("users/${message.receiver}/inbox/sender_${message.sender}");
   
    return await ref.update({DateTime.now().millisecondsSinceEpoch.toString() : {"content": message.content, "timestamp" : message.timeStamp.toString()}});
-
-
-    
-
   }
 
-  void getStreamReadingMessages()
+  Stream<Message?> getStreamReadingMessages(String fromUser)
 {
-
-  FirebaseDatabase.instance.ref
-  ().child('users/${Auth().getCurrentUser!.displayName.toString()}/inbox').onValue.map((event) => print(event.snapshot.value));
+  
+  return FirebaseDatabase.instance.ref().child('users/${Auth().getCurrentUser!.displayName.toString()}/inbox/sender_' + fromUser).limitToLast(1).onValue.map((event)
+   { 
+     print("------------------------------------");
+    var response = event.snapshot.value as Map<dynamic, dynamic>;
+    var a = response.keys.toList()[0];
+    
+   
+   
+    return Message.fromJSON(Map<String,dynamic>.from(response[a] as Map<dynamic, dynamic>), Auth().getCurrentUser!.displayName.toString(), fromUser);});
+  
 }
 
 
