@@ -4,7 +4,7 @@ Features:
 - saving user preferences locally
 - receiving messages in realtime
 
-![](lib/gameplay.gif)
+![](/lib/gameplay.gif)
 
 
 ## Getting Started
