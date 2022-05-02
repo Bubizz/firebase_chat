@@ -16,7 +16,7 @@ class MessageCard extends StatelessWidget {
         child: FractionallySizedBox(
           widthFactor: 6/10,
           child: ClipPath(
-            clipper: CustomClip(),
+            clipper: sentByApppUser ?  CustomClip() : CustomClip2(),
       
             child: Container(
               color: Provider.of<Themes>(context).colorPalette[300] ,
@@ -45,6 +45,27 @@ class CustomClip extends CustomClipper<Path>{
     path.lineTo(size.width-10,size.height);
     path.lineTo(0,size.height);
     path.lineTo(0,0);
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper clipper){
+    return false;
+  } 
+}
+
+class CustomClip2 extends CustomClipper<Path>{
+  @override
+  Path getClip(Size size){
+    Path path = Path();
+    path.moveTo(10,0);
+    path.lineTo(10, size.height/2 - 10);
+    path.lineTo(0,size.height/2);
+    path.lineTo(10,size.height/2 + 10);
+    path.lineTo(10,size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width,0);
     path.close();
     return path;
   }

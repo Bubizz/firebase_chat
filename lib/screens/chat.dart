@@ -1,8 +1,8 @@
 import 'package:chat_app/widgets/message.dart';
 import "package:flutter/cupertino.dart";
 import 'package:flutter/material.dart';
-import 'package:chat_app/models/Message.dart';
-import 'package:chat_app/services/sending_message.dart';
+import 'package:chat_app/models/message.dart';
+import 'package:chat_app/services/chat_logic.dart';
 import 'package:provider/provider.dart';
 import '../services/auth.dart';
 import '../widgets/custom_icon_button.dart';
@@ -162,7 +162,7 @@ class ChatProvider extends ChangeNotifier
   ChatProvider(String usernameInbox)
   {
     ChatLogicHandler().getStreamReadingMessages(usernameInbox).skip(1).listen((event) {if(event!=null){addMessage(event);} });
-    ChatLogicHandler().loadMessages(usernameInbox).then((value)  { messages = value; notifyListeners(); });
+    ChatLogicHandler().loadMessages(usernameInbox).then((value)  { messages.insertAll(0, value); notifyListeners(); });
 
 
     

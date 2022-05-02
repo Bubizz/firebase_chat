@@ -10,7 +10,7 @@ class Themes extends ChangeNotifier {
       : isDark = false,
        customTheme = ThemeData.light().copyWith(
             textTheme: const TextTheme().copyWith(bodyMedium: const TextStyle(color: Colors.black)),
-            primaryColor: colorPalette[500],
+            primaryColor: colorPalette[600],
             buttonColor: colorPalette[150],
             primaryColorLight: colorPalette[300],
             backgroundColor: Colors.white) {
@@ -25,12 +25,12 @@ class Themes extends ChangeNotifier {
   void setTheme(MaterialColor color) async {
     colorPalette = color;
     customTheme = customTheme.copyWith(
-        primaryColor: colorPalette[500],
+        primaryColor: colorPalette[600],
         primaryColorLight: colorPalette[300],
         buttonColor: colorPalette[150]);
     notifyListeners();
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('preferedColor', color.value);
+    prefs.setInt('preferedColor', color.value);
 
  
   }
@@ -39,13 +39,10 @@ class Themes extends ChangeNotifier {
     //sets dark or light mode based on bool and saves preference locally
     customTheme = isDark
         ? ThemeData.dark().copyWith(
-            primaryColor: colorPalette[500],
+            primaryColor: colorPalette[600],
             backgroundColor: Colors.grey[850],
             primaryColorLight: colorPalette[300],
             buttonColor: colorPalette[150])
-
-            
-            
         : ThemeData.light().copyWith(
             textTheme: const TextTheme().copyWith(bodyMedium: const TextStyle(color: Colors.black)),
             primaryColor: colorPalette[500],

@@ -7,7 +7,9 @@ class CustomIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+          print(Theme.of(context).buttonColor.toString());
     return Container(
+
         width: 40,
         height: 40,
         child: IconButton(
