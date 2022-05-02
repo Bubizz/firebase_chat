@@ -1,6 +1,11 @@
 # chat_app
+Features:
+- google authentication
+- saving user preferences locally
+- receiving messages in realtime
 
-A new Flutter project.
+![](lib/gameplay.gif)
+
 
 ## Getting Started
 
